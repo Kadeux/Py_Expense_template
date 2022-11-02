@@ -17,36 +17,38 @@ def show_status():
         if user not in debts:
             debts[user] = []
     # synthetize all debts between users
-    for user in debts:
-        for debtor in debts[user]:
-            debtor_name = list(debtor.keys())[0]
-            for debtor2 in debts[debtor_name]:
-                # check if the debtor owes money
-                for user2 in debtor2:
-                    if user2 == user:
-                        if debtor[debtor_name] > debtor2[user2]:
-                            debtor[debtor_name] -= debtor2[user2]
-                            debtor2[user2] = 0
-                        else:
-                            debtor2[user2] -= debtor[debtor_name]
-                            debtor[debtor_name] = 0
-                    elif synergie(user2, debts[user]):
-                        if debtor[debtor_name] > debtor2[user2]:
-                            tmp = debtor[debtor_name]
-                            debtor[debtor_name] -= debtor2[user2]
-                            for i in debts[user]:
-                                if list(i.keys())[0] == user2:
-                                    i[user2] += tmp - debtor[debtor_name]
-                                    break
-                            debtor2[user2] = 0
-                        else:
-                            tmp = debtor2[user2]
-                            debtor2[user2] -= debtor[debtor_name]
-                            for i in debts[user]:
-                                if list(i.keys())[0] == user2:
-                                    i[user2] += tmp - debtor2[user2]
-                                    break
-                            debtor[debtor_name] = 0
+    for i in range(len(users)):
+        for user in debts:
+            for debtor in debts[user]:
+                debtor_name = list(debtor.keys())[0]
+                for debtor2 in debts[debtor_name]:
+                    # check if the debtor owes money
+                    for user2 in debtor2:
+                        if user2 == user:
+                            if debtor[debtor_name] > debtor2[user2]:
+                                debtor[debtor_name] -= debtor2[user2]
+                                debtor2[user2] = 0
+                            else:
+                                debtor2[user2] -= debtor[debtor_name]
+                                debtor[debtor_name] = 0
+
+                        elif synergie(user2, debts[user]):
+                            if debtor[debtor_name] > debtor2[user2]:
+                                tmp = debtor[debtor_name]
+                                debtor[debtor_name] -= debtor2[user2]
+                                for i in debts[user]:
+                                    if list(i.keys())[0] == user2:
+                                        i[user2] += tmp - debtor[debtor_name]
+                                        break
+                                debtor2[user2] = 0
+                            else:
+                                tmp = debtor2[user2]
+                                debtor2[user2] -= debtor[debtor_name]
+                                for i in debts[user]:
+                                    if list(i.keys())[0] == user2:
+                                        i[user2] += tmp - debtor2[user2]
+                                        break
+                                debtor[debtor_name] = 0
     # print all debts
     for user in debts:
         for debtor in debts[user]:
