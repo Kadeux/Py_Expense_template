@@ -50,11 +50,15 @@ def show_status():
                                         break
                                 debtor[debtor_name] = 0
     # print all debts
+    visited = []
     for user in debts:
         for debtor in debts[user]:
             debtor_name = list(debtor.keys())[0]
             if debtor[debtor_name] != 0:
                 print(user, "owes", debtor_name, debtor[debtor_name])
+                visited.append(user)
+        if user not in visited:
+            print(user, "owes nothing")
 
 def synergie(user, array):
     for i in array:
